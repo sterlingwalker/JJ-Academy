@@ -2,10 +2,14 @@
   "name": "jj-academy",
   "version": "1.0.0",
   "description": "All in one BJJ Journal",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server/index.js",
+    "build": "npm i && cd frontend && npm install && npm run build"
   },
   "author": "Thomas Holloway, Sterling Walker",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
 }
