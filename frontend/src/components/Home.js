@@ -57,7 +57,20 @@ export default function Home() {
             <Grid item xs={8}>
                 <Card variant="outlined">
                     <CardContent>
+                   
                         <Typography sx={{ fontSize: 24 }}  gutterBottom>
+                        <form action="/" method="get">
+                            <label htmlFor="header-search">
+                            <span className="visually-hidden">Search date or topic  </span>
+                            </label>
+                            <input
+                                type="text"
+                                id="header-search"
+                                placeholder="Search date or topic"
+                                name="s" 
+                            />
+                        <button type="submit">Search</button>
+                        </form>
                             Most Recently uploaded video
                         </Typography>
                         <iframe width="760" height="480" src="https://www.youtube.com/embed/_L-Ni7bFAHg" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
