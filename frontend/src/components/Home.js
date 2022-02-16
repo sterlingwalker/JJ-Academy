@@ -28,6 +28,7 @@ export default function Home() {
         const newComment = {name: 'Sterling Walker', comment: currentComment}
 
         setCmt([...cmt, newComment])
+        setCurrentComment('')
     }
 
     return (
