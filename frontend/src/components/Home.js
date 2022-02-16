@@ -41,6 +41,7 @@ export default function Home() {
                 <Card variant="outlined">
                     <CardContent>
 <<<<<<< HEAD
+<<<<<<< HEAD
                         <form action="/" method="get">
                         <label htmlFor="header-search">
                         <span className="visually-hidden">Search date or topic  </span>
@@ -57,6 +58,8 @@ export default function Home() {
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                             Most Recently uploaded video 
 =======
+=======
+>>>>>>> parent of 537dada (Adds comments to home screen)
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                             Most Recently uploaded video
 >>>>>>> parent of 537dada (Adds comments to home screen)
