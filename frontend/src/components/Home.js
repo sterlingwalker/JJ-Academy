@@ -40,6 +40,7 @@ export default function Home() {
             <Grid item xs={8}>
                 <Card variant="outlined">
                     <CardContent>
+<<<<<<< HEAD
                         <form action="/" method="get">
                         <label htmlFor="header-search">
                         <span className="visually-hidden">Search date or topic  </span>
@@ -55,6 +56,10 @@ export default function Home() {
 
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                             Most Recently uploaded video 
+=======
+                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                            Most Recently uploaded video
+>>>>>>> parent of 537dada (Adds comments to home screen)
                         </Typography>
                         <iframe width="760" height="480" src="https://www.youtube.com/embed/_L-Ni7bFAHg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </CardContent>
