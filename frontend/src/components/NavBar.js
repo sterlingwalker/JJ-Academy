@@ -12,15 +12,15 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import Drawer from '@mui/material/Drawer';
 
-const pages = ['Home', 'Journal', 'Match Review', 'Topic Lookup', 'Messages', 'Account'];
+
 const settings = ['Profile', 'Account', 'Logout'];
 
 function LinkTab(props) {
   return (
     <Tab
-      textColor="secondary"
-      indicatorColor="primary"
+      component="a"
       onClick={(event) => {
         event.preventDefault();
       }}
@@ -30,7 +30,7 @@ function LinkTab(props) {
 }
 
 export default function NavBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [drawerOpen, toggleDrawer] = React.useState(false);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [value, setValue] = React.useState(0);
 
@@ -38,15 +38,8 @@ export default function NavBar() {
     setValue(newValue);
   };
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
@@ -72,35 +65,25 @@ export default function NavBar() {
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleOpenNavMenu}
+              onClick={() => toggleDrawer(!drawerOpen)}
               color="inherit"
             >
               <MenuIcon />
             </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
+            <Drawer
+              anchor='left'
+              open={drawerOpen}
+              onClose={() => toggleDrawer(!drawerOpen)}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+              <Tabs orientation="vertical" textColor="common" indicatorColor="secondary" value={value} onChange={handleChange} aria-label="nav tabs">
+                <LinkTab label="Home" href="/" />
+                <LinkTab label="Journal" href="/journal" />
+                <LinkTab label="Match Review" href="/match-review" />
+                <LinkTab label="Topic Lookup" href="/tplookup" />
+                <LinkTab label="Messages" href="/messages" />
+                <LinkTab label="Account" href="/account" />
+              </Tabs>
+            </Drawer>
           </Box>
           <Typography
             variant="h6"
@@ -111,7 +94,7 @@ export default function NavBar() {
             JJ-Academy
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            <Tabs textColor="common" indicatorColor="secondary" value={value} onChange={handleChange} aria-label="nav tabs">
+            <Tabs textColor="inherit" indicatorColor="secondary" value={value} onChange={handleChange} aria-label="nav tabs">
               <LinkTab label="Home" href="/" />
               <LinkTab label="Journal" href="/journal" />
               <LinkTab label="Match Review" href="/match-review" />
