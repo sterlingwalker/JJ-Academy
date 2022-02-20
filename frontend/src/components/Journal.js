@@ -57,24 +57,27 @@ export default function Journal(props) {
             <Dialog open={modalEntry} fullWidth={true} onClose={() => setModalEntry(false)}>
                 <DialogTitle>Add New Journal Entry</DialogTitle>
                 <DialogContent>
-                    <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'space-around !important'}}>
+                    <Box sx={{display: 'flex', flexDirection: 'column', height: '270px'}}>
                         <TextField
                         required
                         label="Entry Title"
+                        variant="standard"
                         />
                         <TextField
                         required
                         label="Note Text"
+                        variant="standard"
                         multiline
                         maxRows={8}
                         />
                         <TextField
                         label="(Optional) Video Link"
+                        variant="standard"
                         />
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <Button>Save Note</Button>
+                    <Button>Add Entry</Button>
                 </DialogActions>
             </Dialog>
 
