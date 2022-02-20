@@ -12,7 +12,27 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Comments from "./Comments";
 
+function Last7Days () {
+    var result = [];
+    for (var i=0; i<7; i++) {
+        var d = new Date();
+        d.setDate(d.getDate() - i);
+        result.push( formatDate(d) )
+    }
 
+    return result;
+}
+
+function formatDate(date){
+
+    var dd = date.getDate();
+    var mm = date.getMonth()+1;
+    var yyyy = date.getFullYear();
+    if(dd<10) {dd='0'+dd}
+    if(mm<10) {mm='0'+mm}
+    date = mm+'/'+dd+'/'+yyyy;
+    return date
+ }
 
 export default function Home() {
     const comments = [
@@ -22,6 +42,8 @@ export default function Home() {
 
     const [cmt, setCmt] = React.useState(comments)
     const [currentComment, setCurrentComment] = React.useState('')
+    const dates = Last7Days()
+
 
     const handleComment = (event) => {
         // Will change the name when we get other stuff hooked up
@@ -36,21 +58,15 @@ export default function Home() {
             <Grid item xs={4}>
             <Paper>
                 <MenuList>
-                    <MenuItem>
-                        <ListItemText>2/12/22</ListItemText>
-                    </MenuItem>
-                    <Divider />
-                    <MenuItem>
-                        <ListItemText>2/11/22</ListItemText>
-                    </MenuItem>
-                    <Divider />
-                    <MenuItem>
-                        <ListItemText>2/10/22</ListItemText>
-                    </MenuItem>
-                    <Divider />
-                    <MenuItem>
-                        <ListItemText>2/9/22</ListItemText>
-                    </MenuItem>
+                    {dates.map(date => (
+                        <React.Fragment>
+
+                            <MenuItem>
+                                <ListItemText>{date}</ListItemText>
+                            </MenuItem>
+                            <Divider />
+                        </React.Fragment>
+                    ))}
                 </MenuList>
                 </Paper>
             </Grid>
