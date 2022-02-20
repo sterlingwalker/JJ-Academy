@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Drawer from '@mui/material/Drawer';
+import { Link } from 'react-router-dom';
 
 
 const settings = ['Profile', 'Account', 'Logout'];
@@ -20,9 +21,9 @@ const settings = ['Profile', 'Account', 'Logout'];
 function LinkTab(props) {
   return (
     <Tab
-      component="a"
+      component={Link}
       onClick={(event) => {
-        event.preventDefault();
+        //event.preventDefault();
       }}
       {...props}
     />
@@ -32,7 +33,7 @@ function LinkTab(props) {
 export default function NavBar() {
   const [drawerOpen, toggleDrawer] = React.useState(false);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(window.location.pathname);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -75,13 +76,13 @@ export default function NavBar() {
               open={drawerOpen}
               onClose={() => toggleDrawer(!drawerOpen)}
             >
-              <Tabs orientation="vertical" textColor="common" indicatorColor="secondary" value={value} onChange={handleChange} aria-label="nav tabs">
-                <LinkTab label="Home" href="/" />
-                <LinkTab label="Journal" href="/journal" />
-                <LinkTab label="Match Review" href="/match-review" />
-                <LinkTab label="Topic Lookup" href="/tplookup" />
-                <LinkTab label="Messages" href="/messages" />
-                <LinkTab label="Account" href="/account" />
+              <Tabs orientation="vertical" textColor="inherit" indicatorColor="secondary" value={value} onChange={handleChange} aria-label="nav tabs">
+                <LinkTab label="Home" to="/" />
+                <LinkTab label="Journal" to="/journal" />
+                <LinkTab label="Match Review" to="/match-review" />
+                <LinkTab label="Topic Lookup" to="/tplookup" />
+                <LinkTab label="Messages" to="/messages" />
+                <LinkTab label="Account" to="/account" />
               </Tabs>
             </Drawer>
           </Box>
@@ -95,12 +96,12 @@ export default function NavBar() {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Tabs textColor="inherit" indicatorColor="secondary" value={value} onChange={handleChange} aria-label="nav tabs">
-              <LinkTab label="Home" href="/" />
-              <LinkTab label="Journal" href="/journal" />
-              <LinkTab label="Match Review" href="/match-review" />
-              <LinkTab label="Topic Lookup" href="/tplookup" />
-              <LinkTab label="Messages" href="/messages" />
-              <LinkTab label="Account" href="/account" />
+              <LinkTab label="Home" to="/" value="/"/>
+              <LinkTab label="Journal" to="/journal" value="/journal"/>
+              <LinkTab label="Match Review" to="/match-review" />
+              <LinkTab label="Topic Lookup" to="/tplookup" />
+              <LinkTab label="Messages" to="/messages" />
+              <LinkTab label="Account" to="/account" />
             </Tabs>
           </Box>
 
