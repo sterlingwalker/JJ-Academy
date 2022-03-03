@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Comments from "./Comments";
+import { getJournalEntryByUserID } from "../api"
 
 function Last7Days () {
     var result = [];
@@ -37,6 +38,15 @@ function formatDate(date){
 export default function Journal(props) {
 
     const dates = Last7Days()
+
+    React.useEffect(() => {
+        getJournalEntryByUserID(55).then(data => {
+            console.log(data)
+
+            // Eventually put logic here to populare the entries with what is returned
+            // Also update to get user id based on login info
+        }).catch(err => console.log(err))
+    }, [])
 
     let exampleEntries = [
         {title: 'Rough day in practice today', date: '2/19/2022', text: 'At the training session today everything was going amazingly, my wrestling was on point, guard and guard passing was phenomenal, "a perfect way to start my training for competition" I thought. Flashforward to today, I was sloppy, got taken down so often, caught in subs and positions I never find myself in. A bad day at the office so to speak, really ruined my confidence.'},

@@ -19,11 +19,11 @@ function App() {
       <Box sx={{padding: '20px'}} >
           <Routes>
             <Route exact path="/" element={<Home />} />
-            <Route path="/journal" element={<Journal />} />
-            <Route path="/match-review" element={<MatchReview />} />
-            <Route path="/tplookup" element={<TopicLookup />} />
-            <Route path="/messages" element={<ChatRoom />} />
-            <Route path="/account" element={<Account />} />
+            <Route exact path="/journal" element={<Journal />} />
+            <Route exact path="/match-review" element={<MatchReview />} />
+            <Route exact path="/tplookup" element={<TopicLookup />} />
+            <Route exact path="/messages" element={<ChatRoom />} />
+            <Route exact path="/account" element={<Account />} />
           </Routes>
       </Box>
     </div>

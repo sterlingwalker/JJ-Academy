@@ -7,14 +7,13 @@
     "start": "node server/index.js",
     "build": "npm i && cd frontend && npm install && npm run build",
     "dev": "nodemon index"
-    
   },
   "author": "Thomas Holloway, Sterling Walker",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "mysql": "^2.18.1"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sterlingwalker/JJ-Academy.git"

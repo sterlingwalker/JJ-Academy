@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const mysql = require("mysql");
-const ejs = require("ejs");
 
 const PORT = process.env.PORT || 3001;
 
@@ -9,23 +8,6 @@ const app = express();
 
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, '../frontend/build')));
-
-// Handle GET requests to /api route
-app.get("/api", (req, res) => {
-	  res.json({ message: "Hello from server!" });
-});
-
-// All other GET requests not handled before will return our React app
-app.get('*', (req, res) => {
-	  res.sendFile(path.resolve(__dirname, '../frontend/build', 'index.html'));
-});
-
-app.listen(PORT, () => {
-	  console.log(`Server listening on ${PORT}`);
-});
-
-
-
 
 
 
@@ -51,17 +33,29 @@ db.connect((err) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // to parse HTML form data
 
-// Initialize ejs Middleware
-app.set("view engine", "ejs");
-app.use("/public", express.static(__dirname + "/public"));
 
-// routes
-app.get("/", (req, res) => {
-res.render("index.ejs");
+app.get('/jounal-entry/:userid', (request, response) => {
+  
+  let userid = request.params.userid
+
+  let sql = `Select * From journal_Entries Where user_id = ${userid};`;
+  db.query(sql, (err, result) => {
+    if (err) {
+      throw err;
+    } else {
+      console.log(result);
+      response.send(JSON.stringify(result))
+    }
+  });
 });
 
-let sql;
-let data;
-let query;
 
+// All other GET requests not handled before will return our React app
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../frontend/build', 'index.html'));
+});
+
+app.listen(PORT, () => {
+  console.log(`Server listening on ${PORT}`);
+});
 

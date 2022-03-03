@@ -50,3 +50,9 @@ user_id int NOT NULL,
 matchID int not null, foreign key  (MatchID) references Matches(match_ID),
 entryID int not null, foreign key  (entryID) references journal_Entries(entry_ID)
 );
+
+
+Insert Into Users Values (55, 'jdoe', 'I know jiu jitsu', 'Yellow', 'John', 'Doe', null);
+
+Insert Into journal_Entries(entry_id, entry_Title, entry_Text, entry_Date, user_id)
+Values(1, 'Jiu Jitsu Practice', 'Today I learned so much!', curdate(), 55);
