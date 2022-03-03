@@ -1,4 +1,4 @@
-create database if not exists jjaademy;
+create database if not exists jjacademy;
 use jjacademy;
 
 create table if not exists chat_Threads(
@@ -50,8 +50,3 @@ user_id int NOT NULL,
 matchID int not null, foreign key  (MatchID) references Matches(match_ID),
 entryID int not null, foreign key  (entryID) references journal_Entries(entry_ID)
 );
-show tables;
-desc chats;
-desc comments;
-desc journal_entries;
-desc users;

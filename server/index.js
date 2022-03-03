@@ -25,12 +25,17 @@ app.listen(PORT, () => {
 });
 
 
+
+
+
+
+
 // Create a database connection configuration
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "Tommy1262",
-  database: "jj-AcademyDB", 
+  database: "jjAcademy", 
 });
 
 // Establish connection with the DB
@@ -42,7 +47,9 @@ db.connect((err) => {
   }
 });
 
-
+// Initialize Body Parser Middleware to parse data sent by users in the request object
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // to parse HTML form data
 
 // Initialize ejs Middleware
 app.set("view engine", "ejs");
@@ -52,7 +59,6 @@ app.use("/public", express.static(__dirname + "/public"));
 app.get("/", (req, res) => {
 res.render("index.ejs");
 });
-
 
 let sql;
 let data;
