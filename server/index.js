@@ -34,7 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // to parse HTML form data
 
 
-app.get('/jounal-entry/:userid', (request, response) => {
+app.get('/journal-entry/:userid', (request, response) => {
   
   let userid = request.params.userid
 
