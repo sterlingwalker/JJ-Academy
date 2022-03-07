@@ -34,7 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // to parse HTML form data
 
 
-app.get('/jounal-entry/:userid', (request, response) => {
+app.get('/journal-entry/:userid', (request, response) => {
   
   let userid = request.params.userid
 
@@ -48,6 +48,21 @@ app.get('/jounal-entry/:userid', (request, response) => {
     }
   });
 });
+
+app.post('/journal-entry', (request, response) => {
+  let body = request.body
+
+
+  let sql = `Insert Into journal_Entries Values(${Math.floor(Math.random() * 10000)}, '${body.title}', '${body.text}', curdate(), ${body.userid});`;
+  db.query(sql, (err, result) => {
+    if (err) {
+      throw err;
+    } else {
+      console.log(result);
+      response.send(JSON.stringify(result))
+    }
+  });
+})
 
 
 // All other GET requests not handled before will return our React app

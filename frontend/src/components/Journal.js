@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Comments from "./Comments";
-import { getJournalEntryByUserID } from "../api"
+import { addJournalEntryByUserID, getJournalEntryByUserID } from "../api"
 
 function Last7Days () {
     var result = [];
@@ -39,24 +39,38 @@ export default function Journal(props) {
 
     const dates = Last7Days()
 
+    let exampleEntries = [
+        {entry_Title: 'Rough day in practice today', entry_Date: dates[0], entry_Text: 'At the training session today everything was going amazingly, my wrestling was on point, guard and guard passing was phenomenal, "a perfect way to start my training for competition" I thought. Flashforward to today, I was sloppy, got taken down so often, caught in subs and positions I never find myself in. A bad day at the office so to speak, really ruined my confidence.'},
+        {entry_Title: 'Training Drills to Practice', entry_Date: '2/18/2022', entry_Text: 'Keep tabs on the completion of all of these training drills', entry_Link: 'https://www.youtube.com/embed/CiMrC9hp0gY'}];
+
+    const [currentEntry, setCurrentEntry] = React.useState(exampleEntries[0])
+    const [totalEntries, setTotalEntries] = React.useState([])
+    const [modalEntry, setModalEntry] = React.useState(false)
+
+    const [entryTitle, setEntryTitle] = React.useState('')
+    const [entryText, setEntryText] = React.useState('')
+
     React.useEffect(() => {
         getJournalEntryByUserID(55).then(data => {
             console.log(data)
 
             // Eventually put logic here to populare the entries with what is returned
             // Also update to get user id based on login info
+            setTotalEntries(data)
+
         }).catch(err => console.log(err))
     }, [])
 
-    let exampleEntries = [
-        {title: 'Rough day in practice today', date: '2/19/2022', text: 'At the training session today everything was going amazingly, my wrestling was on point, guard and guard passing was phenomenal, "a perfect way to start my training for competition" I thought. Flashforward to today, I was sloppy, got taken down so often, caught in subs and positions I never find myself in. A bad day at the office so to speak, really ruined my confidence.'},
-        {title: 'Training Drills to Practice', date: '2/18/2022', text: 'Keep tabs on the completion of all of these training drills', link: 'https://www.youtube.com/embed/CiMrC9hp0gY'}];
-
-    const [entry, setEntry] = React.useState(exampleEntries[0])
-    const [modalEntry, setModalEntry] = React.useState(false)
-
     const changeEntry = (date) => {
-        setEntry(exampleEntries.find(ent => ent.date == date))
+        setCurrentEntry(totalEntries.find(dt => formatDate(new Date(dt.entry_Date)) == formatDate(new Date(date))))
+    }
+
+    const addEntry = () => {
+
+        addJournalEntryByUserID(entryTitle, entryText, 55).then(result => {
+            setModalEntry(false)
+            window.location.reload()
+        })
     }
 
     return (
@@ -72,6 +86,7 @@ export default function Journal(props) {
                         required
                         label="Entry Title"
                         variant="standard"
+                        onChange={(e) => setEntryTitle(e.target.value)}
                         />
                         <TextField
                         required
@@ -79,6 +94,7 @@ export default function Journal(props) {
                         variant="standard"
                         multiline
                         maxRows={8}
+                        onChange={(e) => setEntryText(e.target.value)}
                         />
                         <TextField
                         label="(Optional) Video Link"
@@ -87,7 +103,7 @@ export default function Journal(props) {
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <Button>Add Entry</Button>
+                    <Button onClick={addEntry}>Add Entry</Button>
                 </DialogActions>
             </Dialog>
 
@@ -96,11 +112,11 @@ export default function Journal(props) {
                             Entry Dates
                         </Typography>
                     <MenuList>
-                        {dates.map(date => (
-                            <div key={date}>
+                        {totalEntries.map(entry => (
+                            <div key={entry.entry_Date}>
                                 <Divider />
-                                <MenuItem onClick={() => changeEntry(date)}>
-                                    <ListItemText>{date}</ListItemText>
+                                <MenuItem onClick={() => changeEntry(entry.entry_Date)}>
+                                    <ListItemText>{formatDate(new Date(entry.entry_Date))}</ListItemText>
                                 </MenuItem>
                             </div>
                         ))}
@@ -108,7 +124,7 @@ export default function Journal(props) {
                 </Paper>
             </Grid>
             <Grid item xs={8}>
-                <JournalContent title={entry.title} date={entry.date} text={entry.text} link={entry.link} />
+                <JournalContent title={currentEntry.entry_Title} date={formatDate(new Date(currentEntry.entry_Date))} text={currentEntry.entry_Text} link={currentEntry.entry_Link} />
             </Grid>
         </Grid>
     )
