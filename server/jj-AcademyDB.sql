@@ -27,7 +27,7 @@ chat_Thread int not null, foreign key  (chat_Thread) references chat_Threads(cha
 );
 
  create table if not exists journal_Entries(
- entry_ID int not null unique primary key,
+ entry_ID int not null unique primary key auto_increment,
  entry_Title char(30) not null,
  entry_Text char(200) not null,
  entry_Date date not null null,

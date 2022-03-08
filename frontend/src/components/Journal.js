@@ -103,7 +103,7 @@ export default function Journal(props) {
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={addEntry}>Add Entry</Button>
+                    <Button id = "entrybtn" name = "entrybtn1" onClick={addEntry}>Add Entry</Button>
                 </DialogActions>
             </Dialog>
 
