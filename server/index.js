@@ -74,3 +74,29 @@ app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
 
+
+//Inserts new journal entry into database.
+app.post("/insertJournalEntry", (req, res) => {
+  const entrybutton = req.body.entrybtn1;
+
+
+  sql = `insert into journal_Entries set user_id = select user_id 
+  from journal_Entries
+  where 
+      exists(
+          select * 
+          from Users 
+          where journal_Entries.user_id = Users.userID); entry_Title = '${req.body.entryTitle}',  entry_Text = '${req.body.notes}', entry_Date = curdate()`;
+
+ query = db.query(sql, (err, result) => {
+   if (err) {
+     throw err;
+   }
+   res.send(`Item entry was added in the db...`);
+ });
+});
+
+
+
+
+
