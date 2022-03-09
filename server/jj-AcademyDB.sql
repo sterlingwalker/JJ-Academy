@@ -36,7 +36,7 @@ chat_Thread int not null, foreign key  (chat_Thread) references chat_Threads(cha
 
 
 create table if not exists Matches(
-match_ID int not null unique primary key,
+match_ID int not null unique primary key auto_increment,
 user_id int not null, foreign key  (user_id) references Users(userID),
 match_Title char(50) NOT NULL,
 match_Date date NOT NULL,

@@ -11,6 +11,7 @@ import Comments from "./Comments";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
+import { addMatchByUserID, getMatches, insertMatches } from "../api";
 
 function Last7Days () {
     var result = [];
@@ -59,7 +60,11 @@ export default function MatchReview(props) {
         setEntry(entry)
         setModalEntry(false)
 
+        insertMatches(entryTitle,entryLink,55)
+
         localStorage.setItem('matches', JSON.stringify(entry))
+
+
     }
 
     React.useEffect(() => {
@@ -76,12 +81,14 @@ export default function MatchReview(props) {
                 <DialogContent>
                     <Box sx={{display: 'flex', flexDirection: 'column', height: '270px'}}>
                         <TextField
+                        name = "matchTitle"
                         required
                         label="Entry Title"
                         variant="standard"
                         onChange={(e) => setEntryTitle(e.target.value)}
                         />
                         <TextField
+                        name = "videoupload"
                         required
                         label="Video Link"
                         variant="standard"
@@ -92,7 +99,7 @@ export default function MatchReview(props) {
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={addEntry}>Add Entry</Button>
+                    <Button id = 'matchentry' name = 'matchbutton' onClick={addEntry}>Add Entry</Button>
                 </DialogActions>
             </Dialog>
             <Grid item xs>
