@@ -1,6 +1,7 @@
 import { Grid, TextField } from "@mui/material";
 import * as React from 'react';
-
+import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -10,6 +11,7 @@ import Comments from "./Comments";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
+import { addMatchByUserID, getMatches, insertMatches } from "../api";
 
 function Last7Days () {
     var result = [];
@@ -41,14 +43,65 @@ export default function MatchReview(props) {
     const dates = Last7Days()
 
     const matches = [
-        {title: 'Intense Showdown', date: dates[0], link: 'https://www.youtube.com/embed/8HzJTUC6JtE'},
-        {title: 'Best Jiu Jitsu match of all time', date: dates[1], link: 'https://www.youtube.com/embed/_SXSPBFBFH0'}]
+        {title: 'Intense Showdown', date: dates[0], link: 'https://www.youtube.com/embed/8HzJTUC6JtE', comment: true},
+        {title: 'Best Jiu Jitsu match of all time', date: dates[1], link: 'https://www.youtube.com/embed/_SXSPBFBFH0', comment: true}]
 
     const [entry, setEntry] = React.useState(matches)
     const [value, setValue] = React.useState(null);
+    const [modalEntry, setModalEntry] = React.useState(false)
+
+    const [entryTitle, setEntryTitle] = React.useState('')
+    const [entryLink, setEntryLink] = React.useState('')
+
+    const addEntry = () => {
+        
+        let newMatch = {title: entryTitle, date: dates[0], link: entryLink}
+        entry.unshift(newMatch)
+        setEntry(entry)
+        setModalEntry(false)
+
+        insertMatches(entryTitle,entryLink,55)
+
+        localStorage.setItem('matches', JSON.stringify(entry))
+
+
+    }
+
+    React.useEffect(() => {
+        let matches = localStorage.getItem('matches')
+        if (matches !== null) {
+            setEntry(JSON.parse(matches))
+        } 
+    }, [])
 
     return (
         <Grid container direction="column" justifyContent="center" alignItems="center" spacing={2}>
+            <Dialog open={modalEntry} fullWidth={true} onClose={() => setModalEntry(false)}>
+                <DialogTitle>Add New Journal Entry</DialogTitle>
+                <DialogContent>
+                    <Box sx={{display: 'flex', flexDirection: 'column', height: '270px'}}>
+                        <TextField
+                        name = "matchTitle"
+                        required
+                        label="Entry Title"
+                        variant="standard"
+                        onChange={(e) => setEntryTitle(e.target.value)}
+                        />
+                        <TextField
+                        name = "videoupload"
+                        required
+                        label="Video Link"
+                        variant="standard"
+                        multiline
+                        maxRows={8}
+                        onChange={(e) => setEntryLink(e.target.value)}
+                        />
+                    </Box>
+                </DialogContent>
+                <DialogActions>
+                    <Button id = 'matchentry' name = 'matchbutton' onClick={addEntry}>Add Entry</Button>
+                </DialogActions>
+            </Dialog>
             <Grid item xs>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DatePicker
@@ -61,9 +114,12 @@ export default function MatchReview(props) {
                     />
                 </LocalizationProvider>
             </Grid>
+            <Grid item xs>
+                <Button variant='contained' onClick={() => setModalEntry(true)}>+ New Entry</Button>
+            </Grid>
             {entry.map(entry => (
                 <Grid item xs >
-                    <MatchContent title={entry.title} date={entry.date} link={entry.link} />
+                    <MatchContent title={entry.title} date={entry.date} link={entry.link} cmt={entry.comment} />
                 </Grid>
             ))}
         </Grid>
@@ -83,7 +139,7 @@ function MatchContent(props) {
                         </Typography>
                         {props.link  && <iframe width="760" height="480" src={props.link} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>}
                     </CardContent>
-                    <Comments comments={comments} />
+                    {props.cmt && <Comments comments={comments} />}
                     <CardActions>
                         <Button size="small" variant="contained" >Add Comment</Button>
                     </CardActions>
