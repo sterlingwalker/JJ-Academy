@@ -14,10 +14,10 @@ app.use(express.static(path.resolve(__dirname, '../frontend/build')));
 
 // Create a database connection configuration
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Tommy1262",
-  database: "jjAcademy", 
+  host: "35.222.21.151",
+  user: "jj-user",
+  password: "JJ-4999",
+  database: "jjacademy", 
 });
 
 // Establish connection with the DB
