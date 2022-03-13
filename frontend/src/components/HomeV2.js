@@ -2,12 +2,18 @@ import React from 'react';
 import HomeCard from './HomeCard'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography';
+
+const userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
 
 export default function HomePage() {
 
   return (
     <div >
-        <Box sx={{display: 'flex', justifyContent: 'center', marginBottom: '20px'}}>
+        <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginBottom: '20px'}}>
+        <Typography sx={{ fontSize: 24 }}  gutterBottom>
+            Welcome Back {userInfo.user_Fname}!
+        </Typography>
         <form action="/" method="get">
                             <label htmlFor="header-search">
                             <span className="visually-hidden">Search date or topic  </span>
