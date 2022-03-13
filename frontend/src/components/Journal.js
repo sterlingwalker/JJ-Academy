@@ -72,9 +72,6 @@ export default function Journal(props) {
         })
     }
 
-    const deleteEntry = (id) => {
-
-    }
 
     return (
         <Grid container spacing={2}>
@@ -127,13 +124,24 @@ export default function Journal(props) {
                 </Paper>
             </Grid>
             <Grid item xs={8}>
-                <JournalContent title={currentEntry.entry_Title} date={formatDate(new Date(currentEntry.entry_Date))} text={currentEntry.entry_Text} link={currentEntry.entry_Link} />
+                <JournalContent journalId={currentEntry.entry_ID} title={currentEntry.entry_Title} date={formatDate(new Date(currentEntry.entry_Date))} text={currentEntry.entry_Text} link={currentEntry.entry_Link} />
             </Grid>
         </Grid>
     )
 }
 
 function JournalContent(props) {
+
+    const journalId = props.journalId
+
+    
+    const deleteEntry = () => {
+        //Make a functioon in api.js to call the backend to delete a journal entry with the id above and reload the page afterwards
+    }
+
+    const editEntry = () => {
+        //Make a functioon in api.js to call the backend to delete a journal entry with the id above and reload the page afterwards
+    }
 
     return (
         <Card variant="outlined">
@@ -149,8 +157,8 @@ function JournalContent(props) {
                         
                     </CardContent>
                     <CardActions>
-                        <Button size="small" variant="contained" >Edit Journal Entry</Button>
-                        <Button size="small" variant="outlined" >Delete Journal Entry</Button>
+                        <Button size="small" variant="contained" onClick={editEntry}>Edit Journal Entry</Button>
+                        <Button size="small" variant="outlined" onClick={deleteEntry}>Delete Journal Entry</Button>
                     </CardActions>
                 </Card>
     );

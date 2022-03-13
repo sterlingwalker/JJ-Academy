@@ -38,6 +38,8 @@ function formatDate(date){
     {name: 'Max Parker', comment: 'I really liked his technique, I need to learn that move myself'}, 
     {name: 'John Doe', comment: 'Does anyone know the name of the move he made at 4:32?'}]
 
+ const userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
+
 export default function MatchReview(props) {
 
     const dates = Last7Days()
@@ -52,23 +54,13 @@ export default function MatchReview(props) {
 
     const [entryTitle, setEntryTitle] = React.useState('')
     const [entryLink, setEntryLink] = React.useState('')
-    const [cmt, setCmt] = React.useState(comments)
 
-    const [currentComment, setCurrentComment] = React.useState('')
-    const userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
-
-    const handleComment = (event) => {
-        // Will change the name when we get other stuff hooked up
-        const newComment = {name: 'Sterling Walker', comment: currentComment}
-
-        setCmt([...cmt, newComment])
-        setCurrentComment('')
-    }
 
     const addEntry = () => {
         
         let newMatch = {title: entryTitle, date: dates[0], link: entryLink}
         entry.unshift(newMatch)
+        matches.unshift(newMatch)
         setEntry(entry)
         setModalEntry(false)
 
@@ -120,7 +112,8 @@ export default function MatchReview(props) {
                         label="Enter a date"
                         value={value}
                         onChange={(newValue) => {
-                        setValue(newValue);
+                        setValue(formatDate(newValue));
+                        setEntry(matches.filter(mt => mt.date == formatDate(newValue)))
                         }}
                         renderInput={(params) => <TextField {...params} />}
                     />
@@ -140,6 +133,17 @@ export default function MatchReview(props) {
 
 function MatchContent(props) {
 
+    const [cmt, setCmt] = React.useState(comments)
+
+    const [currentComment, setCurrentComment] = React.useState('')
+
+    const handleComment = (event) => {
+        const newComment = {name: userInfo.user_Fname + ' ' + userInfo.user_LName, comment: currentComment}
+
+        setCmt([...cmt, newComment])
+        setCurrentComment('')
+    }
+
     return (
         <Card variant="outlined">
                     <CardContent>
@@ -151,10 +155,10 @@ function MatchContent(props) {
                         </Typography>
                         {props.link  && <iframe width="760" height="480" src={props.link} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>}
                     </CardContent>
-                    {props.cmt && <Comments comments={comments} />}
-                    <TextField label="Enter a comment" variant="outlined" /*value={currentComment} onChange={event => setCurrentComment(event.target.value)}*/ sx={{width: '95%', marginLeft: '20px'}} />
+                    {props.cmt && <Comments comments={cmt} />}
+                    <TextField label="Enter a comment" variant="outlined" value={currentComment} onChange={event => setCurrentComment(event.target.value)} sx={{width: '95%', marginLeft: '20px'}} />
                     <CardActions>
-                        <Button size="small" variant="contained" >Add Comment</Button>
+                        <Button size="small" variant="contained" onClick={handleComment} >Add Comment</Button>
                     </CardActions>
                 </Card>
     );
