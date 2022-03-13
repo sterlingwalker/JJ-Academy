@@ -112,3 +112,18 @@ app.post("/insertJournalEntry", (req, res) => {
  });
 });
 
+app.post('/credentials', (req, res) => {
+  let response = req.body
+
+  sql = `Select * From Users Where user_Name = '${response.user}' And user_Password = '${response.password}'`
+
+  db.query(sql, (err, result) => {
+    if (err) {
+      throw err;
+    } else {
+      console.log('Successfully logged in');
+      res.send(JSON.stringify(result))
+    }
+  });
+
+})
