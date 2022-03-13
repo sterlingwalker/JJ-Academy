@@ -52,6 +52,18 @@ export default function MatchReview(props) {
 
     const [entryTitle, setEntryTitle] = React.useState('')
     const [entryLink, setEntryLink] = React.useState('')
+    const [cmt, setCmt] = React.useState(comments)
+
+    const [currentComment, setCurrentComment] = React.useState('')
+    const userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
+
+    const handleComment = (event) => {
+        // Will change the name when we get other stuff hooked up
+        const newComment = {name: 'Sterling Walker', comment: currentComment}
+
+        setCmt([...cmt, newComment])
+        setCurrentComment('')
+    }
 
     const addEntry = () => {
         
@@ -77,7 +89,7 @@ export default function MatchReview(props) {
     return (
         <Grid container direction="column" justifyContent="center" alignItems="center" spacing={2}>
             <Dialog open={modalEntry} fullWidth={true} onClose={() => setModalEntry(false)}>
-                <DialogTitle>Add New Journal Entry</DialogTitle>
+                <DialogTitle>Add New Match</DialogTitle>
                 <DialogContent>
                     <Box sx={{display: 'flex', flexDirection: 'column', height: '270px'}}>
                         <TextField
@@ -140,6 +152,7 @@ function MatchContent(props) {
                         {props.link  && <iframe width="760" height="480" src={props.link} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>}
                     </CardContent>
                     {props.cmt && <Comments comments={comments} />}
+                    <TextField label="Enter a comment" variant="outlined" /*value={currentComment} onChange={event => setCurrentComment(event.target.value)}*/ sx={{width: '95%', marginLeft: '20px'}} />
                     <CardActions>
                         <Button size="small" variant="contained" >Add Comment</Button>
                     </CardActions>

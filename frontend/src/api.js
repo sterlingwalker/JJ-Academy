@@ -1,6 +1,6 @@
 export const validateCredentials = async (creds) => {
 
-    const response = await fetch('/credentials', {
+    const response = await fetch('http://localhost:3001/credentials', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({user: creds.user, password: creds.password})
