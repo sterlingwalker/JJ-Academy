@@ -40,8 +40,8 @@ export default function Journal(props) {
     const dates = Last7Days()
 
     let exampleEntries = [
-        {entry_Title: 'Rough day in practice today', entry_Date: dates[0], entry_Text: 'At the training session today everything was going amazingly, my wrestling was on point, guard and guard passing was phenomenal, "a perfect way to start my training for competition" I thought. Flashforward to today, I was sloppy, got taken down so often, caught in subs and positions I never find myself in. A bad day at the office so to speak, really ruined my confidence.'},
-        {entry_Title: 'Training Drills to Practice', entry_Date: '2/18/2022', entry_Text: 'Keep tabs on the completion of all of these training drills', entry_Link: 'https://www.youtube.com/embed/CiMrC9hp0gY'}];
+        {entry_ID: 100, entry_Title: 'Rough day in practice today', entry_Date: dates[0], entry_Text: 'At the training session today everything was going amazingly, my wrestling was on point, guard and guard passing was phenomenal, "a perfect way to start my training for competition" I thought. Flashforward to today, I was sloppy, got taken down so often, caught in subs and positions I never find myself in. A bad day at the office so to speak, really ruined my confidence.'},
+        {entry_ID: 200, entry_Title: 'Training Drills to Practice', entry_Date: '2/18/2022', entry_Text: 'Keep tabs on the completion of all of these training drills', entry_Link: 'https://www.youtube.com/embed/CiMrC9hp0gY'}];
 
     const [currentEntry, setCurrentEntry] = React.useState(exampleEntries[0])
     const [totalEntries, setTotalEntries] = React.useState([])
@@ -50,27 +50,30 @@ export default function Journal(props) {
     const [entryTitle, setEntryTitle] = React.useState('')
     const [entryText, setEntryText] = React.useState('')
 
-    React.useEffect(() => {
-        getJournalEntryByUserID(55).then(data => {
-            console.log(data)
+    const userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
 
-            // Eventually put logic here to populare the entries with what is returned
-            // Also update to get user id based on login info
+    React.useEffect(() => {
+        getJournalEntryByUserID(userInfo.userID).then(data => {
+            console.log(data)
             setTotalEntries(data)
 
         }).catch(err => console.log(err))
     }, [])
 
-    const changeEntry = (date) => {
-        setCurrentEntry(totalEntries.find(dt => formatDate(new Date(dt.entry_Date)) == formatDate(new Date(date))))
+    const changeEntry = (id) => {
+        setCurrentEntry(totalEntries.find(dt => dt.entry_ID == id))
     }
 
     const addEntry = () => {
 
-        addJournalEntryByUserID(entryTitle, entryText, 55).then(result => {
+        addJournalEntryByUserID(entryTitle, entryText, userInfo.userID).then(result => {
             setModalEntry(false)
             window.location.reload()
         })
+    }
+
+    const deleteEntry = (id) => {
+
     }
 
     return (
@@ -115,7 +118,7 @@ export default function Journal(props) {
                         {totalEntries.map(entry => (
                             <div key={entry.entry_Date}>
                                 <Divider />
-                                <MenuItem onClick={() => changeEntry(entry.entry_Date)}>
+                                <MenuItem onClick={() => changeEntry(entry.entry_ID)}>
                                     <ListItemText>{formatDate(new Date(entry.entry_Date))}</ListItemText>
                                 </MenuItem>
                             </div>
@@ -146,7 +149,8 @@ function JournalContent(props) {
                         
                     </CardContent>
                     <CardActions>
-                        <Button size="small" variant="contained" >Add Note</Button>
+                        <Button size="small" variant="contained" >Edit Journal Entry</Button>
+                        <Button size="small" variant="outlined" >Delete Journal Entry</Button>
                     </CardActions>
                 </Card>
     );

@@ -1,3 +1,22 @@
+export const validateCredentials = async (creds) => {
+
+    const response = await fetch('http://localhost:3001/credentials', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({user: creds.user, password: creds.password})
+    })
+
+    let result = await response.json()
+    console.log(result)
+
+    if (result.length > 0) {
+        sessionStorage.setItem('userInfo', JSON.stringify(result[0]))
+        window.location = '/'
+    } else {
+        window.location.reload()
+    }    
+}
+
 export const getJournalEntryByUserID = async (userid) => {
 
     const response = await fetch('http://localhost:3001/journal-entry/' + userid, {
