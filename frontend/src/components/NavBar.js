@@ -16,7 +16,7 @@ import Drawer from '@mui/material/Drawer';
 import { Link } from 'react-router-dom';
 
 
-const settings = ['Profile', 'Account', 'Logout'];
+const settings = ['Logout'];
 
 function LinkTab(props) {
   return (
@@ -34,6 +34,7 @@ export default function NavBar() {
   const [drawerOpen, toggleDrawer] = React.useState(false);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [value, setValue] = React.useState(window.location.pathname);
+  const userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -46,6 +47,11 @@ export default function NavBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('userInfo')
+    window.location.reload()
+  }
 
   return (
     <AppBar position="static">
@@ -77,12 +83,12 @@ export default function NavBar() {
               onClose={() => toggleDrawer(!drawerOpen)}
             >
               <Tabs orientation="vertical" textColor="inherit" indicatorColor="secondary" value={value} onChange={handleChange} aria-label="nav tabs">
-                <LinkTab label="Home" to="/" />
-                <LinkTab label="Journal" to="/journal" />
-                <LinkTab label="Match Review" to="/match-review" />
-                <LinkTab label="Topic Lookup" to="/tplookup" />
-                <LinkTab label="Messages" to="/messages" />
-                <LinkTab label="Account" to="/account" />
+                <LinkTab label="Home" to="/" value="/" />
+                <LinkTab label="Journal" to="/journal" value="/journal"/>
+                <LinkTab label="Match Review" to="/match-review" value="/match-review"/>
+                <LinkTab label="Topic Lookup" to="/tplookup" value="/tplookup"/>
+                <LinkTab label="Messages" to="/messages" value="/messages"/>
+                <LinkTab label="Account" to="/account" value="/account"/>
               </Tabs>
             </Drawer>
           </Box>
@@ -98,17 +104,17 @@ export default function NavBar() {
             <Tabs textColor="inherit" indicatorColor="secondary" value={value} onChange={handleChange} aria-label="nav tabs">
               <LinkTab label="Home" to="/" value="/"/>
               <LinkTab label="Journal" to="/journal" value="/journal"/>
-              <LinkTab label="Match Review" to="/match-review" />
-              <LinkTab label="Topic Lookup" to="/tplookup" />
-              <LinkTab label="Messages" to="/messages" />
-              <LinkTab label="Account" to="/account" />
+              <LinkTab label="Match Review" to="/match-review" value="/match-review"/>
+              <LinkTab label="Topic Lookup" to="/tplookup" value="/tplookup"/>
+              <LinkTab label="Messages" to="/messages" value="/messages"/>
+              <LinkTab label="Account" to="/account" value="/account"/>
             </Tabs>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt={userInfo.user_Fname + ' ' + userInfo.user_LName} src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -128,7 +134,7 @@ export default function NavBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={handleLogout}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

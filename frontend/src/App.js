@@ -12,6 +12,7 @@ import TopicLookup from './components/TopicLookup';
 import ChatRoom from './components/ChatRoom';
 import Account from './components/Account';
 import Login from './components/Login';
+import HomeV2 from './components/HomeV2'
 
 function App() {
 
@@ -30,7 +31,8 @@ function App() {
         <NavBar />
         <Box sx={{padding: '20px'}} >
             <Routes>
-              <Route exact path="/" element={<Home />} />
+              <Route exact path="/" element={<HomeV2 />} />
+              <Route exact path="/oldhome" element={<Home />} />
               <Route exact path="/journal" element={<Journal />} />
               <Route exact path="/match-review" element={<MatchReview />} />
               <Route exact path="/tplookup" element={<TopicLookup />} />
