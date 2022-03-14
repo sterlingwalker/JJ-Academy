@@ -84,3 +84,15 @@ export const addMatchByUserID = async (title, text, userid) => {
 
     return result
 }
+
+export const getAllMatches = async () => {
+
+    const response = await fetch('http://localhost:3001/allMatches', {
+        method: 'GET'
+    })
+
+     let result = await response.json()
+    console.log(result)
+
+    return result
+}

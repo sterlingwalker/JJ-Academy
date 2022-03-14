@@ -9,9 +9,17 @@ import { CardActionArea } from '@mui/material';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
+import Button from '@mui/material/Button';
+import CardActions from '@mui/material/CardActions';
+import json from '../topics.json'
+import Quiz from 'react-quiz-component';
+import quiz from '../quiz.json'
+
 
 
 export default function TopicLookup(props) {
+
+  const [toggle, setToggle] = React.useState(false)
 
     const categoryInfo = [
         {title: 'Sweeps', url: 'https://i.ytimg.com/vi/qp5AXBHxQec/maxresdefault.jpg', desc: 'A BJJ sweep allows a guard player to improve his or her position by disrupting an opponent\'s balance and transitioning to a more dominant position.'},
@@ -20,6 +28,8 @@ export default function TopicLookup(props) {
         {title: 'Submissions', url: 'https://bjj-world.com/wp-content/uploads/2018/09/artilheiro_2_1024x1024-1.jpg', desc: 'In BJJ, a “submission” is a technique, that when executed successfully, will control, maim, hurt, or subdue. '}]
 
     return (
+      <React.Fragment>
+        {toggle ? <TopicContent title={json[0].title} author={json[0].author} text={json[0].text} link={json[0].link} /> : 
         <Grid container direction="column" justifyContent="center" alignItems="center" spacing={2}>
             <Grid item>
             <Paper
@@ -37,7 +47,7 @@ export default function TopicLookup(props) {
             </Grid>
             <Grid container spacing={5} direction="row" justifyContent="center" alignItems="center"  >
                 {categoryInfo.slice(0,2).map(cat => (
-                    <Grid item>
+                    <Grid onClick={() => setToggle(true)} item>
                         <TopicCard url={cat.url} title={cat.title} desc={cat.desc} />
                     </Grid>
                 ))}
@@ -52,6 +62,8 @@ export default function TopicLookup(props) {
                 ))}
             </Grid>
         </Grid>
+      }
+      </React.Fragment>
     )
 
 }
@@ -77,4 +89,27 @@ function TopicCard(props) {
         </CardActionArea>
       </Card>
     );
+}
+
+function TopicContent(props) {
+
+
+  return (
+      <Card variant="outlined">
+                  <CardContent>
+                      <Typography sx={{ fontSize: 24 }}  gutterBottom>
+                           {props.title}
+                      </Typography>
+                      <Typography sx={{ fontSize: 18 }}  gutterBottom>
+                          {'Created By: ' + props.author}
+                      </Typography >
+                      {props.text.split('<br />').map(paragraph => <p>{paragraph} <br /></p>)}
+                      <br></br>
+                      {props.link  && <iframe width="960" height="480" src={props.link} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>}
+                      
+                  </CardContent>
+                  
+                  <Quiz quiz={quiz}/>
+              </Card>
+  );
 }
