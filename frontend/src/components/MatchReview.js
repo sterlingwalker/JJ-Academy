@@ -11,7 +11,7 @@ import Comments from "./Comments";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
-import { addMatchByUserID, getMatches, insertMatches } from "../api";
+import { addMatchByUserID, getAllMatches, getMatches, insertMatches } from "../api";
 
 function Last7Days () {
     var result = [];
@@ -44,38 +44,36 @@ export default function MatchReview(props) {
 
     const dates = Last7Days()
 
-    const matches = [
+    let matches = [
         {title: 'Intense Showdown', date: dates[0], link: 'https://www.youtube.com/embed/8HzJTUC6JtE', comment: true},
         {title: 'Best Jiu Jitsu match of all time', date: dates[1], link: 'https://www.youtube.com/embed/_SXSPBFBFH0', comment: true}]
 
-    const [entry, setEntry] = React.useState(matches)
+    const [entry, setEntry] = React.useState([])
     const [value, setValue] = React.useState(null);
     const [modalEntry, setModalEntry] = React.useState(false)
 
     const [entryTitle, setEntryTitle] = React.useState('')
     const [entryLink, setEntryLink] = React.useState('')
+    const userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
 
 
     const addEntry = () => {
         
-        let newMatch = {title: entryTitle, date: dates[0], link: entryLink}
-        entry.unshift(newMatch)
-        matches.unshift(newMatch)
-        setEntry(entry)
         setModalEntry(false)
 
-        insertMatches(entryTitle,entryLink,55)
+        insertMatches(entryTitle, entryLink, userInfo.userID)
 
-        localStorage.setItem('matches', JSON.stringify(entry))
-
+        window.location.reload()
 
     }
 
     React.useEffect(() => {
-        let matches = localStorage.getItem('matches')
-        if (matches !== null) {
-            setEntry(JSON.parse(matches))
-        } 
+        getAllMatches().then(data => {
+            data.forEach(item => item.date = formatDate(new Date(item.date)))
+            setEntry(data)
+            matches = data
+        })
+        
     }, [])
 
     return (
@@ -155,7 +153,7 @@ function MatchContent(props) {
                         </Typography>
                         {props.link  && <iframe width="760" height="480" src={props.link} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>}
                     </CardContent>
-                    {props.cmt && <Comments comments={cmt} />}
+                    <Comments comments={cmt} />
                     <TextField label="Enter a comment" variant="outlined" value={currentComment} onChange={event => setCurrentComment(event.target.value)} sx={{width: '95%', marginLeft: '20px'}} />
                     <CardActions>
                         <Button size="small" variant="contained" onClick={handleComment} >Add Comment</Button>

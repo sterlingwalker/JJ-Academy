@@ -80,6 +80,25 @@ app.post('/match', (request, response) => {
   });
 })
 
+app.get('/allMatches', (req, res) => {
+
+  sql = `
+  Select  CONCAT(m.match_Title, ' - Uploaded By ', u.user_Fname) As title , match_Date As date, match_Link As link, match_ID 
+  From Matches m
+  Join Users u On m.user_id = u.userID
+  Order By date desc;`
+
+  db.query(sql, (err, result) => {
+    if (err) {
+      throw err;
+    } else {
+      console.log('Grabbed all matches');
+      res.send(JSON.stringify(result))
+    }
+  });
+
+})
+
 
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
@@ -127,3 +146,5 @@ app.post('/credentials', (req, res) => {
   });
 
 })
+
+

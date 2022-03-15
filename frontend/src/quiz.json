@@ -1,0 +1,67 @@
+{
+    "quizTitle": "Jiu Jitsu Sweeps review Quiz",
+    "quizSynopsis": "This quiz will test your mastery of this article for the foundations of the 3 essential sweeps.",
+    "nrOfQuestions": "4",
+    "questions": [
+      {
+        "question": "What are the three pillars of jiu jitsu?",
+        "questionType": "text",
+        "questionPic": "https://i0.wp.com/northmantrader.com/wp-content/uploads/2020/04/The-Three-Pillars-2.png?ssl=1", 
+        "answerSelectionType": "single",
+        "answers": [
+          "Triangle, kneebar, kimura",
+          "Armbar, americana, omoplata",
+          "Armbar, triangle, omoplata"
+        ],
+        "correctAnswer": "3",
+        "messageForCorrectAnswer": "Correct answer. Good job.",
+        "messageForIncorrectAnswer": "Incorrect answer. Please try again.",
+        "explanation": "Explanation:",
+        "point": "20"
+      },
+      {
+        "question": "Which posistion can you not get a kneebar from?",
+        "questionType": "text",
+        "answerSelectionType": "single",
+        "answers": [
+          "Bottom mount",
+          "Half guard top",
+          "Half guard bottom",
+          "Bottom guard"
+        ],
+        "correctAnswer": "1",
+        "messageForCorrectAnswer": "Correct answer. Good job.",
+        "messageForIncorrectAnswer": "Incorrect answer. Please try again.",
+        "explanation": "Explanation:",
+        "point": "20"
+      },
+      {
+        "question": "A kneebar puts torque on your ankle.",
+        "questionType": "text",
+        "answerSelectionType": "single",
+        "answers": [
+          "True",
+          "False"
+        ],
+        "correctAnswer": "2",
+        "messageForCorrectAnswer": "Correct answer. Good job.",
+        "messageForIncorrectAnswer": "Incorrect answer. Please try again.",
+        "explanation": "Explanation:",
+        "point": "10"
+      },
+      {
+        "question": "A gogoplata is a choke.",
+        "questionType": "text",
+        "answerSelectionType": "single",
+        "answers": [
+          "Nope it's a shoulder lock.",
+          "Yup, it's the preferred choke."
+        ],
+        "correctAnswer": "2",
+        "messageForCorrectAnswer": "Correct answer. Good job.",
+        "messageForIncorrectAnswer": "Incorrect answer. Please try again.",
+        "explanation": "Explanation:",
+        "point": "30"
+      }
+    ]
+  }
