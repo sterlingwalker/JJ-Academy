@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const mysql = require("mysql");
+const { NOTIMP } = require('dns');
 
 const PORT = process.env.PORT || 3001;
 
@@ -148,3 +149,33 @@ app.post('/credentials', (req, res) => {
 })
 
 
+//delete journal entry
+app.post("/deletejournal/:journalID", (req, res) => {
+  let journalID = req.params.journalID
+  sql = `delete from journal_Entries where entry_ID = ${journalID}`
+ query = db.query(sql, (err, result) => {
+   if (err) {
+     throw err;
+   }
+   else {
+     console.log("Successfully deleted")
+     res.send("Successfully deleted")
+   }
+
+ });
+});
+
+//update journal info
+app.post("/updatejournal", (req, res) => {
+  sql = `update journal_Entries set entry_Title = '${req.body.entryTitle}',  entry_Text = '${req.body.notes}' where entry_ID = ${req.body.journalId}`
+ query = db.query(sql, (err, result) => {
+   if (err) {
+     throw err;
+   }
+   else{
+     console.log("entry updated")
+     res.send("edit success")
+   }
+
+ });
+});

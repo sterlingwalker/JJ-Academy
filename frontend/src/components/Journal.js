@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Comments from "./Comments";
-import { addJournalEntryByUserID, getJournalEntryByUserID } from "../api"
+import { addJournalEntryByUserID, getJournalEntryByUserID, deleteJournalByEntryID, updateJournalByEntryID } from "../api"
 
 function Last7Days () {
     var result = [];
@@ -136,13 +136,29 @@ function JournalContent(props) {
 
     
     const deleteEntry = () => {
-        //Make a functioon in api.js to call the backend to delete a journal entry with the id above and reload the page afterwards
+        console.log("about to delete journal")
+        deleteJournalByEntryID(journalId).then(result => {
+            console.log("reload page")
+            window.location.reload()
+            
+        })
     }
+
 
     const editEntry = () => {
-        //Make a functioon in api.js to call the backend to delete a journal entry with the id above and reload the page afterwards
+        updateJournalByEntryID(entryTitle, entryText, journalId).then(result => {
+            setModalEntry(false)
+            window.location.reload()
+        })
+        
+        
+        
     }
 
+    const [modalEntry, setModalEntry] = React.useState(false)
+    const userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
+    const [entryTitle, setEntryTitle] = React.useState('')
+    const [entryText, setEntryText] = React.useState('')
     return (
         <Card variant="outlined">
                     <CardContent>
@@ -157,7 +173,39 @@ function JournalContent(props) {
                         
                     </CardContent>
                     <CardActions>
-                        <Button size="small" variant="contained" onClick={editEntry}>Edit Journal Entry</Button>
+                        <Button size="small" variant="contained" onClick={() => setModalEntry(true)}>Edit Journal Entry</Button>
+                            <Dialog open={modalEntry} fullWidth={true} onClose={() => setModalEntry(false)}>
+                            <DialogTitle>Edit Journal Entry</DialogTitle>
+                            <DialogContent>
+                            <Box sx={{display: 'flex', flexDirection: 'column', height: '270px'}}>
+                                <TextField
+                                    required
+                                    id = "entryTitle"
+                                    name = "entryTitle"
+                                    label="Entry Title"
+                                    variant="standard"
+                                    onChange={(e) => setEntryTitle(e.target.value)}
+                                />
+                                <TextField
+                                required
+                                id = "notes"
+                                name = "notes"
+                                label="Note Text"
+                                variant="standard"
+                                multiline
+                                maxRows={8}
+                                onChange={(e) => setEntryText(e.target.value)}
+                                />
+                                <TextField
+                                label="(Optional) Video Link"
+                                variant="standard"
+                                />
+                                </Box>
+                            </DialogContent>
+                            <DialogActions>
+                            <Button id = "editEntryBtn" name = "editEntryBtn1" onClick={editEntry}>change Entry</Button>
+                            </DialogActions>
+                            </Dialog>
                         <Button size="small" variant="outlined" onClick={deleteEntry}>Delete Journal Entry</Button>
                     </CardActions>
                 </Card>
