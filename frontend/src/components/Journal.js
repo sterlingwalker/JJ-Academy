@@ -41,9 +41,9 @@ export default function Journal(props) {
 
     let exampleEntries = [
         {entry_ID: 100, entry_Title: 'Rough day in practice today', entry_Date: dates[0], entry_Text: 'At the training session today everything was going amazingly, my wrestling was on point, guard and guard passing was phenomenal, "a perfect way to start my training for competition" I thought. Flashforward to today, I was sloppy, got taken down so often, caught in subs and positions I never find myself in. A bad day at the office so to speak, really ruined my confidence.'},
-        {entry_ID: 200, entry_Title: 'Training Drills to Practice', entry_Date: '2/18/2022', entry_Text: 'Keep tabs on the completion of all of these training drills', entry_Link: 'https://www.youtube.com/embed/CiMrC9hp0gY'}];
+        {entry_ID: 200, entry_Title: 'Training Drills to Practice', entry_Date: '3/18/2022', entry_Text: 'Keep tabs on the completion of all of these training drills', entry_Link: 'https://www.youtube.com/embed/CiMrC9hp0gY'}];
 
-    const [currentEntry, setCurrentEntry] = React.useState(exampleEntries[0])
+    const [currentEntry, setCurrentEntry] = React.useState(exampleEntries[1])
     const [totalEntries, setTotalEntries] = React.useState([])
     const [modalEntry, setModalEntry] = React.useState(false)
 
