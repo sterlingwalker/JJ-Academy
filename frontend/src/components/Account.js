@@ -18,11 +18,11 @@ import Select from '@mui/material/Select';
 export default function Account(props) {
 
     const startingInfo = {
-        name: 'Sensei Kyoto', 
+        name: 'Thomas Holloway', 
         role: 'Teacher', 
         belt: 'Black Belt', 
         pfpLink: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2eN8ZS-WW7HqmiOGKHDdLV8qUEKOU5b3bZg&usqp=CAU',
-        bio: `Ther returns thought himself might, and that man's count with may we his sicklied of die, that pause. To be with make and lose bourns the to bear to trageous rath that under that pith make arrows of?`, 
+        bio: `Jiu-jitsu has taught me strength and discipline and a new way to live. I practice every day just because it's what I love to do.`, 
         beltLink: 'https://www.360-bjj.com/assets/images/belts/black.png'}
 
     const [userInfo, setUserInfo] = React.useState(startingInfo)
