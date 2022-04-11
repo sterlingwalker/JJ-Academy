@@ -49,6 +49,7 @@ export default function Journal(props) {
 
     const [entryTitle, setEntryTitle] = React.useState('')
     const [entryText, setEntryText] = React.useState('')
+    const [entryLink, setEntryLink] = React.useState('')
 
     const userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
 
@@ -66,7 +67,7 @@ export default function Journal(props) {
 
     const addEntry = () => {
 
-        addJournalEntryByUserID(entryTitle, entryText, userInfo.userID).then(result => {
+        addJournalEntryByUserID(entryTitle, entryText, entryLink, userInfo.userID).then(result => {
             setModalEntry(false)
             window.location.reload()
         })
@@ -99,6 +100,7 @@ export default function Journal(props) {
                         <TextField
                         label="(Optional) Video Link"
                         variant="standard"
+                        onChange={(e) => setEntryLink(e.target.value)}
                         />
                     </Box>
                 </DialogContent>
@@ -136,9 +138,7 @@ function JournalContent(props) {
 
     
     const deleteEntry = () => {
-        console.log("about to delete journal")
         deleteJournalByEntryID(journalId).then(result => {
-            console.log("reload page")
             window.location.reload()
             
         })
@@ -146,19 +146,17 @@ function JournalContent(props) {
 
 
     const editEntry = () => {
-        updateJournalByEntryID(entryTitle, entryText, journalId).then(result => {
+        updateJournalByEntryID(entryTitle, entryText, entryLink, journalId).then(result => {
             setModalEntry(false)
             window.location.reload()
         })
-        
-        
-        
     }
 
     const [modalEntry, setModalEntry] = React.useState(false)
     const userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
     const [entryTitle, setEntryTitle] = React.useState('')
     const [entryText, setEntryText] = React.useState('')
+    const [entryLink, setEntryLink] = React.useState('')
     return (
         <Card variant="outlined">
                     <CardContent>
@@ -199,6 +197,7 @@ function JournalContent(props) {
                                 <TextField
                                 label="(Optional) Video Link"
                                 variant="standard"
+                                onChange={(e) => setEntryLink(e.target.value)}
                                 />
                                 </Box>
                             </DialogContent>

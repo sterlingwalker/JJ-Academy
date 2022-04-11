@@ -31,6 +31,7 @@ chat_Thread int not null, foreign key  (chat_Thread) references chat_Threads(cha
  entry_Title char(30) not null,
  entry_Text char(200) not null,
  entry_Date date not null null,
+ entry_Link varchar(255) null,
  user_id int not null, foreign key  (user_id) references Users(userID)
  );
 

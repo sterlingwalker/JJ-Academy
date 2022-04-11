@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const mysql = require("mysql");
-const { NOTIMP } = require('dns');
 
 const PORT = process.env.PORT || 3001;
 
@@ -54,7 +53,7 @@ app.post('/journal-entry', (request, response) => {
   let body = request.body
 
 
-  let sql = `Insert Into journal_Entries Values(${Math.floor(Math.random() * 10000)}, '${body.title}', '${body.text}', curdate(), ${body.userid});`;
+  let sql = `Insert Into journal_Entries Values(${Math.floor(Math.random() * 10000)}, '${body.title}', '${body.text}', curdate(), ${body.userid}, '${body.link}');`;
   db.query(sql, (err, result) => {
     if (err) {
       throw err;
@@ -167,7 +166,7 @@ app.post("/deletejournal/:journalID", (req, res) => {
 
 //update journal info
 app.post("/updatejournal", (req, res) => {
-  sql = `update journal_Entries set entry_Title = '${req.body.entryTitle}',  entry_Text = '${req.body.notes}' where entry_ID = ${req.body.journalId}`
+  sql = `update journal_Entries set entry_Title = '${req.body.entryTitle}',  entry_Text = '${req.body.notes}', entry_Link = '${req.body.link}' where entry_ID = ${req.body.journalId}`
  query = db.query(sql, (err, result) => {
    if (err) {
      throw err;
