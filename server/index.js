@@ -54,7 +54,7 @@ app.post('/journal-entry', (request, response) => {
   let body = request.body
 
 
-  let sql = `Insert Into journal_Entries Values(${Math.floor(Math.random() * 10000)}, '${body.title}', '${body.text}', curdate(), ${body.userid});`;
+  let sql = `Insert Into journal_Entries Values(${Math.floor(Math.random() * 10000)}, '${body.title}', '${body.text}', curdate(), ${body.userid}, '${body.link}');`;
   db.query(sql, (err, result) => {
     if (err) {
       throw err;

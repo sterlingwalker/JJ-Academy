@@ -30,7 +30,7 @@ export const getJournalEntryByUserID = async (userid) => {
     return result
 }
 
-export const addJournalEntryByUserID = async (title, text, userid) => {
+export const addJournalEntryByUserID = async (title, text, link, userid) => {
 
     const response = await fetch('http://localhost:3001/journal-entry/', {
         method: 'POST',
@@ -38,6 +38,7 @@ export const addJournalEntryByUserID = async (title, text, userid) => {
         body: JSON.stringify({
             title: title,
             text: text,
+            link: link,
             userid: userid
         })
     })
