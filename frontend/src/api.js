@@ -98,7 +98,7 @@ export const deleteJournalByEntryID = async (journalId) => {
 
 
 
-export const updateJournalByEntryID = async (title, text, userid) => {
+export const updateJournalByEntryID = async (title, text, link, userid) => {
 
     const response = await fetch('http://localhost:3001/updatejournal/', {
         method: 'POST',
@@ -106,6 +106,7 @@ export const updateJournalByEntryID = async (title, text, userid) => {
         body: JSON.stringify({
             entryTitle: title,
             notes: text,
+            link: link,
             journalId: userid
         })
     })
