@@ -48,10 +48,12 @@ export default function MatchReview(props) {
         {title: 'Intense Showdown', date: dates[0], link: 'https://www.youtube.com/embed/8HzJTUC6JtE', comment: true},
         {title: 'Best Jiu Jitsu match of all time', date: dates[1], link: 'https://www.youtube.com/embed/_SXSPBFBFH0', comment: true}]
 
-    const [entry, setEntry] = React.useState([])
+    const [entry, setEntry] = React.useState([]);
+    const [filteredEntries, setFilteredEntries] = React.useState([]);
     const [value, setValue] = React.useState(null);
     const [modalEntry, setModalEntry] = React.useState(false)
 
+    const [clearButton, setClearButton] = React.useState(false)
     const [entryTitle, setEntryTitle] = React.useState('')
     const [entryLink, setEntryLink] = React.useState('')
     const userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
@@ -67,11 +69,17 @@ export default function MatchReview(props) {
 
     }
 
+    const clearDate = () => {
+        setClearButton(false)
+        setFilteredEntries(entry)
+        setValue(null)
+    }
+
     React.useEffect(() => {
         getAllMatches().then(data => {
             data.forEach(item => item.date = formatDate(new Date(item.date)))
             setEntry(data)
-            matches = data
+            setFilteredEntries(data)
         })
         
     }, [])
@@ -110,17 +118,22 @@ export default function MatchReview(props) {
                         label="Enter a date"
                         value={value}
                         onChange={(newValue) => {
-                        setValue(formatDate(newValue));
-                        setEntry(matches.filter(mt => mt.date == formatDate(newValue)))
+                        setValue(formatDate(newValue))
+                        setFilteredEntries(entry.filter(mt => mt.date == formatDate(new Date(newValue))))
+                        setClearButton(true)
                         }}
                         renderInput={(params) => <TextField {...params} />}
                     />
                 </LocalizationProvider>
             </Grid>
+            {clearButton && 
+            <Grid item xs>
+                <Button variant='contained' onClick={() => clearDate()}>Clear Date</Button>
+            </Grid>}
             <Grid item xs>
                 <Button variant='contained' onClick={() => setModalEntry(true)}>+ New Entry</Button>
             </Grid>
-            {entry.map(entry => (
+            {filteredEntries.map(entry => (
                 <Grid item xs >
                     <MatchContent title={entry.title} date={entry.date} link={entry.link} cmt={entry.comment} />
                 </Grid>
