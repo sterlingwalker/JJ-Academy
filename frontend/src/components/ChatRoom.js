@@ -26,8 +26,8 @@ export default function ChatRoom(props) {
 
     const chatList = [{
         avatar: 'https://storage.needpix.com/rsynced_images/profile-2398782_1280.png',
-        title: 'Sterling',
-        subtitle: 'What are you doing?',
+        title: 'Thomas',
+        subtitle: 'You ready for this tournament?',
         date: new Date(),
         unread: 1,
         onClick: () => sendInputToThread()
@@ -128,7 +128,7 @@ export default function ChatRoom(props) {
         {
             position: 'left',
             type: 'text',
-            text: 'What are you doing?',
+            text: 'You ready for this tournament?',
             date: new Date(),
         },
     ]
@@ -164,7 +164,7 @@ export default function ChatRoom(props) {
         }
     ]
 
-    const thomasInfo = {name: 'Sterling', bio: 'All-new black belt champion', data: thomasMessages, img: 'https://storage.needpix.com/rsynced_images/profile-2398782_1280.png'}
+    const thomasInfo = {name: 'Thomas', bio: 'All-new black belt champion', data: thomasMessages, img: 'https://storage.needpix.com/rsynced_images/profile-2398782_1280.png'}
     const senseiInfo = {name: 'Sensei Kyoto', bio: 'Leader of the Gym', data: senSeiMessages, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2eN8ZS-WW7HqmiOGKHDdLV8qUEKOU5b3bZg&usqp=CAU'}
     const katelynInfo = {name: 'Katelyn', bio: 'Jiu Jitsu Queen', data: katelynMessages, img: 'https://ps.w.org/metronet-profile-picture/assets/icon-256x256.png?rev=2464419'}
     const frankInfo = {name: 'Frank', bio: 'Yall Im just here', data: frankMessages, img: 'https://sidomexentertainment.com/wp-content/uploads/2021/02/Funny-head.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-2'}
@@ -194,41 +194,32 @@ export default function ChatRoom(props) {
         const thrd = [...messageThread, newMessage]
         setMessageThread(thrd)
         
-        if (recipientInfo.name == 'Sterling' && msgCounter == 0) {
+        if (recipientInfo.name == 'Thomas' && msgCounter == 0) {
             setTimeout(() => {
                 setTextLoading(true)
                 setTimeout(() => {
-                    setMessageThread([...thrd, {position: 'left', type: 'text', text: 'Watching a tutorial on how to improve my sweeps', date: new Date()}])
+                    setMessageThread([...thrd, {position: 'left', type: 'text', text: 'I think next Thursday', date: new Date()}])
                     setTextLoading(false)
                     setMsgCounter(msgCounter + 1)
                 }, 8000)
             }, 2000)
         }
-        if (recipientInfo.name == 'Sterling' && msgCounter == 1) {
+        
+        if (recipientInfo.name == 'Thomas' && msgCounter == 1) {
             setTimeout(() => {
                 setTextLoading(true)
                 setTimeout(() => {
-                    setMessageThread([...thrd, {position: 'left', type: 'text', text: 'I know it\'s so helpful!', date: new Date()}])
+                    setMessageThread([...thrd, {position: 'left', type: 'text', text: 'Np see ya there', date: new Date()}])
                     setTextLoading(false)
                     setMsgCounter(msgCounter + 1)
-                }, 8000)
-            }, 1500)
-        }
-        if (recipientInfo.name == 'Sterling' && msgCounter == 2) {
-            setTimeout(() => {
-                setTextLoading(true)
-                setTimeout(() => {
-                    setMessageThread([...thrd, {position: 'left', type: 'text', text: 'Talk to ya later', date: new Date()}])
-                    setTextLoading(false)
-                    setMsgCounter(msgCounter + 1)
-                }, 1500)
-            }, 600)
+                }, 2500)
+            }, 1200)
         }
     }
 
     const bringUpMessages = (name) => {
         console.log(name)
-        if (name == 'Sterling') {
+        if (name == 'Thomas') {
             setRecipientInfo(thomasInfo)
             setMessageThread(thomasMessages)
             let newChats = chats

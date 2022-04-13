@@ -38,7 +38,7 @@ app.get('/journal-entry/:userid', (request, response) => {
   
   let userid = request.params.userid
 
-  let sql = `Select * From journal_Entries Where user_id = ${userid};`;
+  let sql = `Select * From journal_Entries Where user_id = ${userid} order by entry_Date desc;`;
   db.query(sql, (err, result) => {
     if (err) {
       throw err;

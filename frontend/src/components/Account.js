@@ -18,10 +18,10 @@ import Select from '@mui/material/Select';
 export default function Account(props) {
 
     const startingInfo = {
-        name: 'Thomas Holloway', 
+        name: 'Sterling Walker', 
         role: 'Teacher', 
         belt: 'Black Belt', 
-        pfpLink: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2eN8ZS-WW7HqmiOGKHDdLV8qUEKOU5b3bZg&usqp=CAU',
+        pfpLink: 'https://pbs.twimg.com/media/E9sN5jzVUAUgYHn.png',
         bio: `Jiu-jitsu has taught me strength and discipline and a new way to live. I practice every day just because it's what I love to do.`, 
         beltLink: 'https://www.360-bjj.com/assets/images/belts/black.png'}
 
